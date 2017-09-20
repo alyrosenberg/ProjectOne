@@ -11,7 +11,22 @@ def getData(file):
 #cases.
 
 	#Your code here:
-	pass
+	readfile = open(file, 'r')
+	content = readfile.readlines()
+	firstline = content.pop(0)
+	keys = firstline.strip().split(",")
+
+	outputlist = []
+
+	for line in content:
+		currentline = line.strip().split(",")
+		tempdic = {}
+		for i, word in enumerate(currentline):
+			tempdic[keys[i]] = word
+		outputlist.append(tempdic)
+
+	return outputlist
+
 
 #Sort based on key/column
 def mySort(data,col):
@@ -19,7 +34,10 @@ def mySort(data,col):
 #Output: Return a string of the form firstName lastName
 
 	#Your code here:
-	pass
+	sortedlist = sorted(data, key=lambda k: k[col])
+	outputstring = "" + sortedlist[0]["First"] + " " + sortedlist[0]["Last"]
+	return outputstring
+	
 
 #Create a histogram
 def classSizes(data):
@@ -29,8 +47,14 @@ def classSizes(data):
 # [('Senior', 26), ('Junior', 25), ('Freshman', 21), ('Sophomore', 18)]
 
 	#Your code here:
-	pass
+	classtallies = {"Freshman":0, "Sophomore":0, "Junior":0, "Senior":0}
+	for student in data:
+		classtallies[student["Class"]] += 1
 
+	unsortedtuplist = [(k, v) for k, v in classtallies.items()]
+	sortedtuplist = sorted(unsortedtuplist, key = lambda x: x[1], reverse=True)
+	return sortedtuplist
+	
 
 
 # Find the most common day of the year to be born
@@ -40,7 +64,15 @@ def findDay(a):
 # most often seen in the DOB
 
 	#Your code here:
-	pass
+	countdic = {num:0 for num in range(1,32)}
+	for student in a:
+		datestring = student["DOB"]
+		splitlist = datestring.split("/")
+		dayofmonth = int(splitlist[1])
+		countdic[dayofmonth] += 1
+	x = max(countdic.items(), key=lambda k: k[1])[0]
+	return x
+
 
 
 # Find the average age (rounded) of the Students
@@ -50,7 +82,20 @@ def findAge(a):
 # most often seen in the DOB
 
 	#Your code here:
-	pass
+	countdic = {num:0 for num in range(-100,100)}
+	for student in a:
+		datestring = student["DOB"]
+		splitlist = datestring.split("/")
+		age = int(2017) - int(splitlist[2])
+		countdic[age] += 1
+	total = 0
+	count = 0
+	for key in countdic.keys():
+		count += countdic[key]
+		total += key*countdic[key]
+	return int(total/count)
+
+
 
 #Similar to mySort, but instead of returning single
 #Student, all of the sorted data is saved to a csv file.
@@ -59,7 +104,16 @@ def mySortPrint(a,col,fileName):
 #Output: None
 
 	#Your code here:
-	pass
+	csv_file = open(fileName,'w')
+	headers = list(a[0].keys())
+	csv_file.write(','.join(headers)+'\n')
+	for student in a:
+		vals = list(student.values())
+		csv_file.write(','.join(vals)+'\n')
+
+	csv_file.close()
+
+
 
 
 
