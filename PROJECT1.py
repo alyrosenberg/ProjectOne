@@ -75,7 +75,7 @@ def findDay(a):
 			countdic[dayofmonth] += 1
 
 	return max(countdic, key=lambda x: countdic[x])
-	
+
 
 
 
@@ -144,7 +144,7 @@ def main():
 	print("Read in Test data and store as a list of dictionaries")
 	data = getData('P1DataA.csv')
 	data2 = getData('P1DataB.csv')
-	total += test(type(data),type([]),35)
+	total += test(type(data),type([]),40)
 	print()
 	print("First student sorted by First name:")
 	total += test(mySort(data,'First'),'Abbot Le',15)
