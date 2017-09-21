@@ -1,4 +1,5 @@
 import os
+import filecmp
 
 def getData(file):
 #Input: file name
@@ -64,14 +65,17 @@ def findDay(a):
 # most often seen in the DOB
 
 	#Your code here:
-	countdic = {num:0 for num in range(1,32)}
-	for student in a:
-		datestring = student["DOB"]
-		splitlist = datestring.split("/")
-		dayofmonth = int(splitlist[1])
-		countdic[dayofmonth] += 1
-	x = max(countdic.items(), key=lambda k: k[1])[0]
-	return x
+	countdic = {}
+	for student in a[1:]:
+		month, dayofmonth, year = student["DOB"].split('/')
+		dayofmonth = int(dayofmonth)
+		if dayofmonth not in countdic:
+			countdic[dayofmonth] = 1
+		else:
+			countdic[dayofmonth] += 1
+
+	return max(countdic, key=lambda x: countdic[x])
+	
 
 
 
@@ -105,11 +109,12 @@ def mySortPrint(a,col,fileName):
 
 	#Your code here:
 	csv_file = open(fileName,'w')
-	headers = list(a[0].keys())
-	csv_file.write(','.join(headers)+'\n')
-	for student in a:
-		vals = list(student.values())
-		csv_file.write(','.join(vals)+'\n')
+	sortedlist = sorted(a, key=lambda k: k[col])
+	#headers = list(a[0].keys())
+	#csv_file.write(','.join(headers)+'\n')
+	for student in sortedlist:
+		vals = list(student.values())[:3]
+		csv_file.write(','.join(vals)+ ',' +'\n')
 
 	csv_file.close()
 
