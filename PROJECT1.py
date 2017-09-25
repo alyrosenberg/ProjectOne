@@ -28,7 +28,6 @@ def getData(file):
 
 	return outputlist
 
-
 #Sort based on key/column
 def mySort(data,col):
 #Input: list of dictionaries
@@ -38,7 +37,6 @@ def mySort(data,col):
 	sortedlist = sorted(data, key=lambda k: k[col])
 	outputstring = "" + sortedlist[0]["First"] + " " + sortedlist[0]["Last"]
 	return outputstring
-	
 
 #Create a histogram
 def classSizes(data):
@@ -56,8 +54,6 @@ def classSizes(data):
 	sortedtuplist = sorted(unsortedtuplist, key = lambda x: x[1], reverse=True)
 	return sortedtuplist
 	
-
-
 # Find the most common day of the year to be born
 def findDay(a):
 # Input: list of dictionaries
@@ -75,9 +71,6 @@ def findDay(a):
 			countdic[dayofmonth] += 1
 
 	return max(countdic, key=lambda x: countdic[x])
-
-
-
 
 # Find the average age (rounded) of the Students
 def findAge(a):
@@ -99,8 +92,6 @@ def findAge(a):
 		total += key*countdic[key]
 	return int(total/count)
 
-
-
 #Similar to mySort, but instead of returning single
 #Student, all of the sorted data is saved to a csv file.
 def mySortPrint(a,col,fileName):
@@ -117,10 +108,6 @@ def mySortPrint(a,col,fileName):
 		csv_file.write(','.join(vals)+ ',' +'\n')
 
 	csv_file.close()
-
-
-
-
 
 ################################################################
 ## DO NOT MODIFY ANY CODE BELOW THIS
