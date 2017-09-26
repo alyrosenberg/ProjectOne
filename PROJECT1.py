@@ -1,5 +1,6 @@
 import os
 import filecmp
+import datetime
 
 def getData(file):
 #Input: file name
@@ -79,25 +80,22 @@ def findAge(a):
 # most often seen in the DOB
 
 	#Your code here:
-	countdic = {num:0 for num in range(-100,100)}
-	for student in a:
-		datestring = student["DOB"]
-		splitlist = datestring.split("/")
-		age = int(2017) - int(splitlist[2])
-		countdic[age] += 1
-	total = 0
-	count = 0
-	for key in countdic.keys():
-		count += countdic[key]
-		total += key*countdic[key]
-	return int(total/count)
-
+	age = []
+	for student in a[1:]:
+		month, day, year = student['DOB'].split('/')
+		currentyear = int(datetime.date.today().year)
+		currentmonth = int(datetime.date.today().month)
+		currentday = int(datetime.date.today().day)
+		if ((currentday > int(day)) and (currentmonth) > int(month)):
+			age.append(currentyear - int(year))
+		else:
+			age.append(currentyear - int(year) + 1)
+	return round(sum(age) / len(age), 0)
 #Similar to mySort, but instead of returning single
 #Student, all of the sorted data is saved to a csv file.
 def mySortPrint(a,col,fileName):
 #Input: list of dictionaries, key to sort by and output file name
 #Output: None
-
 	#Your code here:
 	csv_file = open(fileName,'w')
 	sortedlist = sorted(a, key=lambda k: k[col])
@@ -108,6 +106,7 @@ def mySortPrint(a,col,fileName):
 		csv_file.write(','.join(vals)+ ',' +'\n')
 
 	csv_file.close()
+	return None
 
 ################################################################
 ## DO NOT MODIFY ANY CODE BELOW THIS
